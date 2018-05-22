@@ -1,0 +1,136 @@
+$yellow: #fac929;
+
+body {
+    margin: 0;
+    font-family: Charter, Georgia, serif;
+    background-color: #1a6b17;
+}
+
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    height: 100vh;
+}
+
+.money {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $yellow;
+
+    p {
+        margin-top: 0;
+    }
+}
+
+.bet {
+    border: 0;
+    border-bottom: 2px solid $yellow;
+    width: 120px;
+    font-family: Charter, Georgia, serif;
+    font-size: 18px;
+    color: $yellow;
+    background: transparent;
+}
+
+.hand {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    margin: 0 25px;
+    border-radius: 5px;
+    padding: 0;
+
+    svg {
+        position: relative;
+        display: block;
+        width: 100px;
+        height: 139.732px;
+    }
+
+    &.locked {
+        position: relative;
+        //background-color: #fadb29;
+        box-shadow: 0 0 3px 5px rgba($yellow, 0.9);
+
+        &:after {
+            content: 'HOLD';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, 100%);
+            font-size: 13px;
+            letter-spacing: 0.1em;
+            color: $yellow;
+        }
+    }
+}
+
+.score {
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color: $yellow;
+}
+
+.show-score {
+    opacity: 1;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+button {
+    appearance: none;
+    box-shadow: none;
+    border: none;
+    padding: 10px 20px;
+    font-family: Charter, Georgia, serif;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: $yellow;
+}
+
+@media (max-width: 760px) {
+    #app {
+        padding: 10px;
+    }
+    .hand {
+        justify-content: space-around;
+    }
+
+    .card {
+        margin: 0;
+
+        svg {
+            width: 65px;
+            height: 90.826px;
+        }
+    }
+
+    .score {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 420px) {
+    .card svg {
+        width: 45px;
+        height: 62.8795px;
+    }
+}
