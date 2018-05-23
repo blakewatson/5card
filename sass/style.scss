@@ -31,9 +31,26 @@ html {
     p {
         margin-top: 0;
     }
+
+    button {
+        padding: 0;
+        width: 16px;
+        height: 16px;
+        font-size: 14px;
+        color: $yellow;
+        background: transparent;
+
+        span {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
 }
 
 .bet {
+    appearance: none;
     border: 0;
     border-bottom: 2px solid $yellow;
     width: 120px;
@@ -41,6 +58,20 @@ html {
     font-size: 18px;
     color: $yellow;
     background: transparent;
+}
+
+.bet-up {
+    &:after {
+        content: '▲';
+        display: block;
+    }
+}
+
+.bet-down {
+    &:after {
+        content: '▼';
+        display: block;
+    }
 }
 
 .hand {
@@ -110,6 +141,13 @@ button {
     #app {
         padding: 10px;
     }
+
+    .money {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
     .hand {
         justify-content: space-around;
     }

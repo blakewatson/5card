@@ -5,6 +5,8 @@
             <p>
                 <label for="bet">Bet amount:</label>
                 <input type="number" id="bet" class="bet" min="5" :max="balance" step="5" v-model.number="bet" :disabled="turn === 1" />
+                <button class="bet-up" @click="betUp"><span>Up</span></button>
+                <button class="bet-down" @click="betDown"><span>Down</span></button>
             </p>
         </div>
         <div class="hand">
@@ -17,10 +19,11 @@
                 <svg><use :xlink:href="cardImg(card)" /></svg>
             </div>
         </div>
-        <p class="score">{{ this.score | uppercase }}</p>
+        <p class="score">{{ this.msg | uppercase }}</p>
         <div class="buttons">
             <button @click="draw" v-if="turn === 1">Draw</button>
-            <button @click="deal" v-if="turn === 2">Deal</button>
+            <button @click="deal" v-if="turn === 2 && balance > 0">Deal</button>
+            <button @click="reset" v-if="turn === 2 && balance === 0">Reset</button>
         </div>
     </div>
 </template>
@@ -41,12 +44,16 @@ export default {
             turn: 2,
             balance: 100,
             bet: 5,
-            score: 'Press deal to start'
+            msg: 'Press deal to start'
         };
     },
 
     methods: {
         deal() {
+            if(this.balance < this.bet) {
+                this.msg = 'Not enough cash for that bet.';
+                return;
+            }
             this.deck = Deck.newDeck();
             var hand = Deck.draw(this.deck, 5);
             this.hand = hand.map(card => {
@@ -54,7 +61,7 @@ export default {
                 return card;
             });
             this.balance -= this.bet;
-            this.score = 'Choose cards to hold';
+            this.msg = 'Choose cards to hold';
             this.turn = 1;
         },
 
@@ -73,10 +80,27 @@ export default {
                 if(card.lock) return card;
                 return Deck.draw(this.deck)[0];
             });
-            this.score = HandValuator.scoreHand(this.hand);
+            this.msg = HandValuator.scoreHand(this.hand);
             this.turn = 2;
-            if(this.score === 'nothing') return;
-            this.balance = this.balance + (this.bet * multipliers[this.score]);
+            if(this.msg === 'nothing') return;
+            this.balance = this.balance + (this.bet * multipliers[this.msg]);
+        },
+
+        betUp() {
+            this.bet += 5;
+        },
+
+        betDown() {
+            if(this.bet < 6) return;
+            this.bet -= 5;
+        },
+
+        reset() {
+            this.balance = 100;
+            this.bet = 5;
+            this.turn = 2;
+            this.msg = 'Press deal to start';
+            this.hand = [];
         }
     },
 
