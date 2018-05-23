@@ -46,6 +46,10 @@ html {
             top: 0;
             left: 0;
         }
+
+        &[disabled="disabled"] {
+            opacity: 0.25;
+        }
     }
 }
 

@@ -5,8 +5,8 @@
             <p>
                 <label for="bet">Bet amount:</label>
                 <input type="number" id="bet" class="bet" min="5" :max="balance" step="5" v-model.number="bet" :disabled="turn === 1" />
-                <button class="bet-up" @click="betUp"><span>Up</span></button>
-                <button class="bet-down" @click="betDown"><span>Down</span></button>
+                <button class="bet-up" :disabled="turn === 1" @click="betUp"><span>Up</span></button>
+                <button class="bet-down" :disabled="turn === 1" @click="betDown"><span>Down</span></button>
             </p>
         </div>
         <div class="hand">
@@ -87,10 +87,12 @@ export default {
         },
 
         betUp() {
+            if(this.turn !== 2) return;
             this.bet += 5;
         },
 
         betDown() {
+            if(this.turn !== 2) return;
             if(this.bet < 6) return;
             this.bet -= 5;
         },
