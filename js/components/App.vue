@@ -103,6 +103,12 @@ export default {
             this.turn = 2;
             this.msg = 'Press deal to start';
             this.hand = [];
+        },
+    },
+
+    watch: {
+        balance(newVal) {
+            window.localStorage.setItem('balance', newVal);
         }
     },
 
@@ -110,6 +116,12 @@ export default {
         uppercase(text) {
             return text.toUpperCase();
         }
+    },
+
+    beforeMount() {
+        var balance = window.localStorage.getItem('balance');
+        if(balance === null) return;
+        this.balance = parseInt(balance);
     }
 }
 </script>

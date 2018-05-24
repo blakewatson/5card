@@ -10,7 +10,6 @@
     </head>
     
     <body>
-        <script src="http://localhost:8098"></script>
         <?php echo file_get_contents( 'cards.svg' ); ?>
 
         <div id="app"></div>
