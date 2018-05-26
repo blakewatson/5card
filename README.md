@@ -26,4 +26,4 @@ You start with $100. If you go broke, your cash balance will reset to $100. You 
 | Straight                   |            x  7 |
 | Three of a Kind            |            x  3 |
 | Two Pair                   |            x  2 |
-| One Pair (Jacks or better) |            x  2 |
+| One Pair (Jacks or better) |            x  1 |
