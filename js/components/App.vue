@@ -1,30 +1,34 @@
 <template>
     <div id="app">
-        <div class="money">
-            <p class="balance">Cash: ${{ balance }}</p>
-            <p>
-                <label for="bet">Bet amount:</label>
-                <input type="number" id="bet" class="bet" min="5" :max="balance" step="5" v-model.number="bet" :disabled="turn === 1" />
-                <button class="bet-up" :disabled="turn === 1" @click="betUp"><span>Up</span></button>
-                <button class="bet-down" :disabled="turn === 1" @click="betDown"><span>Down</span></button>
-            </p>
-        </div>
-        <div class="hand">
-            <div class="card"
-                v-if="hand.length"
-                v-for="(card, index) in hand"
-                :key="card.suit+card.rank"
-                :class="{ 'locked': card.lock }"
-                @click="toggleLock(index)">
-                <svg><use :xlink:href="cardImg(card)" /></svg>
+        <div class="game">
+            <div class="money">
+                <p class="balance">Cash: ${{ balance }}</p>
+                <p>
+                    <label for="bet">Bet amount:</label>
+                    <input type="number" id="bet" class="bet" min="5" :max="balance" step="5" v-model.number="bet" :disabled="turn === 1" />
+                    <button class="bet-up" :disabled="turn === 1" @click="betUp"><span>Up</span></button>
+                    <button class="bet-down" :disabled="turn === 1" @click="betDown"><span>Down</span></button>
+                </p>
+            </div>
+            <div class="hand">
+                <div class="card"
+                    v-if="hand.length"
+                    v-for="(card, index) in hand"
+                    :key="card.suit+card.rank"
+                    :class="{ 'locked': card.lock }"
+                    @click="toggleLock(index)">
+                    <svg><use :xlink:href="cardImg(card)" /></svg>
+                </div>
+            </div>
+            <p class="score">{{ this.msg | uppercase }}</p>
+            <div class="buttons">
+                <button class="secondary" @click="view = 'rules'">Rules</button>
+                <button @click="draw" v-if="turn === 1">Draw</button>
+                <button @click="deal" v-if="turn === 2 && balance > 0">Deal</button>
+                <button @click="reset" v-if="turn === 2 && balance === 0">Reset</button>
             </div>
         </div>
-        <p class="score">{{ this.msg | uppercase }}</p>
-        <div class="buttons">
-            <button @click="draw" v-if="turn === 1">Draw</button>
-            <button @click="deal" v-if="turn === 2 && balance > 0">Deal</button>
-            <button @click="reset" v-if="turn === 2 && balance === 0">Reset</button>
-        </div>
+        <rules v-show="view === 'rules'" @close-rules="view = 'game'"></rules>
     </div>
 </template>
 
@@ -33,12 +37,14 @@ import Vue from 'vue';
 import Deck from '../classes/Deck.js';
 import HandValuator from '../classes/HandValuator.js';
 import data from "../data.js";
+import Rules from './Rules.vue'
 
 var multipliers = data.multipliers;
 
 export default {
     data() {
         return {
+            view: 'game',
             deck: [],
             hand: [],
             turn: 2,
@@ -116,6 +122,10 @@ export default {
         uppercase(text) {
             return text.toUpperCase();
         }
+    },
+
+    components: {
+        'rules': Rules
     },
 
     beforeMount() {
