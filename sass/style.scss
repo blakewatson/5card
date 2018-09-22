@@ -84,9 +84,15 @@ html {
 }
 
 .card {
+    position: relative;
     margin: 0 25px;
     border-radius: 5px;
     padding: 0;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+        transform: translateY(-3px);
+    }
 
     svg {
         position: relative;
@@ -99,6 +105,7 @@ html {
         position: relative;
         //background-color: #fadb29;
         box-shadow: 0 0 3px 5px rgba($yellow, 0.9);
+        transform: translateY(-3px);
 
         &:after {
             content: 'HOLD';
@@ -139,6 +146,11 @@ button {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     background: $yellow;
+    transition: transform 0.15s ease-in-out;
+
+    &:hover {
+        transform: scale(1.05);
+    }
 
     &.secondary {
         border: 1px solid $yellow;

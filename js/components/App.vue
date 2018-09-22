@@ -16,7 +16,7 @@
                     v-for="(card, index) in hand"
                     :key="card.suit+card.rank"
                     :class="{ 'locked': card.lock }"
-                    @click="toggleLock(index)">
+                    @mousedown="toggleLock(index)">
                     <svg><use :xlink:href="cardImg(card)" /></svg>
                 </div>
             </div>
